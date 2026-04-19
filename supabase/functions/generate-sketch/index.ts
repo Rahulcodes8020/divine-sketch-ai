@@ -16,9 +16,18 @@ Deno.serve(async (req) => {
     }
 
     const styleMap: Record<string, string> = {
-      pencil: "graphite pencil sketch, soft shading",
-      charcoal: "charcoal drawing, deep shadows, high contrast",
-      lineart: "clean line art, minimal shading",
+      pencil: "graphite pencil sketch, soft shading, fine hatching",
+      charcoal: "charcoal drawing, deep shadows, high contrast, smudged textures",
+      lineart: "clean line art, minimal shading, bold outlines",
+      crosshatch: "cross-hatched pencil sketch, intricate hatching lines, ink-like depth",
+      stippling: "stippling dot art, pointillism style, fine ink dots forming shading",
+      ink: "ink pen sketch, bold strokes, fine nib detailing, classic illustration style",
+      realistic: "hyper-realistic graphite pencil drawing, photorealistic shading, ultra-fine detail",
+      cartoon: "black and white cartoon sketch, clean cel-shaded line drawing, expressive features",
+      anime: "anime-style line sketch, manga ink drawing, sharp clean lines, screentone shading",
+      "watercolor-bw": "monochrome black and white watercolor sketch, soft ink wash, expressive brush strokes",
+      vintage: "vintage engraving illustration, old-world etching, intricate line engraving style",
+      mandala: "intricate mandala line art, symmetrical sacred geometry patterns, fine ornamental detailing",
     };
     const styleText = styleMap[style] ?? styleMap.pencil;
 
