@@ -55,6 +55,58 @@ const GODS = [
   "Dhruv", "Prahlad", "Markandeya", "Eklavya", "Abhimanyu",
 ];
 
+const CELEBRITIES = [
+  // Bollywood Legends
+  "Amitabh Bachchan", "Dilip Kumar", "Raj Kapoor", "Dev Anand", "Rajesh Khanna",
+  "Shashi Kapoor", "Sanjeev Kumar", "Rishi Kapoor", "Vinod Khanna", "Jeetendra",
+  "Dharmendra", "Sunil Dutt", "Ashok Kumar", "Guru Dutt", "Shammi Kapoor",
+  // Bollywood Actors (Modern)
+  "Shah Rukh Khan", "Salman Khan", "Aamir Khan", "Akshay Kumar", "Hrithik Roshan",
+  "Ajay Devgn", "Saif Ali Khan", "Anil Kapoor", "Sanjay Dutt", "Govinda",
+  "Ranbir Kapoor", "Ranveer Singh", "Varun Dhawan", "Sidharth Malhotra",
+  "Tiger Shroff", "Vicky Kaushal", "Kartik Aaryan", "Ayushmann Khurrana",
+  "Rajkummar Rao", "Nawazuddin Siddiqui", "Irrfan Khan", "Manoj Bajpayee",
+  "Pankaj Tripathi", "Boman Irani", "Paresh Rawal", "Naseeruddin Shah",
+  "Om Puri", "Anupam Kher", "Shahid Kapoor", "John Abraham", "Abhishek Bachchan",
+  // Bollywood Actresses (Legends)
+  "Madhubala", "Meena Kumari", "Nargis", "Waheeda Rehman", "Hema Malini",
+  "Rekha", "Sridevi", "Madhuri Dixit", "Juhi Chawla", "Kajol", "Karisma Kapoor",
+  // Bollywood Actresses (Modern)
+  "Aishwarya Rai Bachchan", "Priyanka Chopra", "Deepika Padukone", "Katrina Kaif",
+  "Anushka Sharma", "Kareena Kapoor Khan", "Vidya Balan", "Rani Mukerji",
+  "Alia Bhatt", "Shraddha Kapoor", "Kriti Sanon", "Kiara Advani", "Sara Ali Khan",
+  "Janhvi Kapoor", "Disha Patani", "Jacqueline Fernandez", "Parineeti Chopra",
+  "Sonam Kapoor", "Bhumi Pednekar", "Taapsee Pannu", "Tabu", "Konkona Sen Sharma",
+  // South Indian Superstars
+  "Rajinikanth", "Kamal Haasan", "Mohanlal", "Mammootty", "Chiranjeevi",
+  "Nagarjuna", "Venkatesh", "Mahesh Babu", "Pawan Kalyan", "Allu Arjun",
+  "Ram Charan", "Jr NTR", "Prabhas", "Vijay (Thalapathy)", "Ajith Kumar",
+  "Suriya", "Vikram", "Dhanush", "Vijay Sethupathi", "Yash", "Sudeep",
+  "Puneeth Rajkumar", "Dulquer Salmaan", "Fahadh Faasil", "Nani", "Ravi Teja",
+  // South Indian Actresses
+  "Jayalalithaa", "Savitri", "Khushbu", "Trisha Krishnan",
+  "Nayanthara", "Samantha Ruth Prabhu", "Rashmika Mandanna", "Pooja Hegde",
+  "Tamannaah Bhatia", "Kajal Aggarwal", "Anushka Shetty", "Sai Pallavi",
+  "Keerthy Suresh", "Shruti Haasan",
+  // Hollywood Legends
+  "Marilyn Monroe", "Audrey Hepburn", "Charlie Chaplin", "Humphrey Bogart",
+  "Marlon Brando", "James Dean", "Elizabeth Taylor", "Grace Kelly",
+  "Clint Eastwood", "Robert De Niro", "Al Pacino", "Jack Nicholson",
+  "Anthony Hopkins", "Morgan Freeman", "Sean Connery",
+  // Hollywood Actors (Modern)
+  "Tom Cruise", "Tom Hanks", "Brad Pitt", "Leonardo DiCaprio", "Johnny Depp",
+  "Will Smith", "Denzel Washington", "Keanu Reeves", "Hugh Jackman",
+  "Robert Downey Jr.", "Chris Hemsworth", "Chris Evans", "Mark Ruffalo",
+  "Christian Bale", "Matt Damon", "Ben Affleck", "Ryan Reynolds", "Ryan Gosling",
+  "Dwayne Johnson", "Jason Statham", "Vin Diesel", "Daniel Craig",
+  "Joaquin Phoenix", "Cillian Murphy", "Timothée Chalamet", "Tom Holland",
+  // Hollywood Actresses (Modern)
+  "Meryl Streep", "Julia Roberts", "Nicole Kidman", "Angelina Jolie",
+  "Jennifer Lawrence", "Scarlett Johansson", "Anne Hathaway", "Natalie Portman",
+  "Emma Stone", "Emma Watson", "Jennifer Aniston", "Cate Blanchett",
+  "Charlize Theron", "Gal Gadot", "Margot Robbie", "Zendaya", "Florence Pugh",
+];
+
 const STYLES = [
   { value: "pencil", label: "Pencil Sketch" },
   { value: "charcoal", label: "Charcoal Sketch" },
@@ -71,17 +123,21 @@ const STYLES = [
 ];
 
 const Index = () => {
+  const [category, setCategory] = useState<"spiritual" | "celebrity">("spiritual");
   const [god, setGod] = useState("Krishna");
+  const [celebrity, setCelebrity] = useState("Amitabh Bachchan");
   const [style, setStyle] = useState("pencil");
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  const subject = category === "spiritual" ? god : celebrity;
 
   const handleGenerate = async () => {
     setLoading(true);
     setImageUrl(null);
     try {
       const { data, error } = await supabase.functions.invoke("generate-sketch", {
-        body: { god, style },
+        body: { god: subject, style, category },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
@@ -100,7 +156,7 @@ const Index = () => {
     if (!imageUrl) return;
     const a = document.createElement("a");
     a.href = imageUrl;
-    a.download = `${god}-${style}-sketch.png`;
+    a.download = `${subject}-${style}-sketch.png`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -118,22 +174,46 @@ const Index = () => {
             Sketch Generator
           </h1>
           <p className="text-muted-foreground text-base md:text-lg">
-            Generate divine hand-drawn sketches of deities, saints & spiritual icons.
+            Generate hand-drawn sketches of deities, saints & film stars.
           </p>
         </header>
 
         <Card className="p-6 md:p-8 shadow-[var(--shadow-soft)] border-border/60">
+          <div className="space-y-2 mb-4">
+            <Label htmlFor="category">Category</Label>
+            <Select value={category} onValueChange={(v) => setCategory(v as "spiritual" | "celebrity")}>
+              <SelectTrigger id="category"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="spiritual">Spiritual / Mythological</SelectItem>
+                <SelectItem value="celebrity">Film Industry (Actors & Actresses)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="god">Select Deity / Character</Label>
-              <Select value={god} onValueChange={setGod}>
-                <SelectTrigger id="god"><SelectValue /></SelectTrigger>
-                <SelectContent className="max-h-72">
-                  {GODS.map((g) => (
-                    <SelectItem key={g} value={g}>{g}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Label htmlFor="subject">
+                {category === "spiritual" ? "Select Deity / Character" : "Select Actor / Actress"}
+              </Label>
+              {category === "spiritual" ? (
+                <Select value={god} onValueChange={setGod}>
+                  <SelectTrigger id="subject"><SelectValue /></SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {GODS.map((g) => (
+                      <SelectItem key={g} value={g}>{g}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <Select value={celebrity} onValueChange={setCelebrity}>
+                  <SelectTrigger id="subject"><SelectValue /></SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {CELEBRITIES.map((c) => (
+                      <SelectItem key={c} value={c}>{c}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="style">Sketch Style</Label>
@@ -173,7 +253,7 @@ const Index = () => {
                 <div className="rounded-xl overflow-hidden border border-border bg-white">
                   <img
                     src={imageUrl}
-                    alt={`${style} sketch of Lord ${god}`}
+                    alt={`${style} sketch of ${subject}`}
                     className="w-full h-auto block"
                   />
                 </div>
