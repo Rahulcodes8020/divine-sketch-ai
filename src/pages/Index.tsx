@@ -156,7 +156,7 @@ const Index = () => {
     if (!imageUrl) return;
     const a = document.createElement("a");
     a.href = imageUrl;
-    a.download = `${god}-${style}-sketch.png`;
+    a.download = `${subject}-${style}-sketch.png`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -174,22 +174,46 @@ const Index = () => {
             Sketch Generator
           </h1>
           <p className="text-muted-foreground text-base md:text-lg">
-            Generate divine hand-drawn sketches of deities, saints & spiritual icons.
+            Generate hand-drawn sketches of deities, saints & film stars.
           </p>
         </header>
 
         <Card className="p-6 md:p-8 shadow-[var(--shadow-soft)] border-border/60">
+          <div className="space-y-2 mb-4">
+            <Label htmlFor="category">Category</Label>
+            <Select value={category} onValueChange={(v) => setCategory(v as "spiritual" | "celebrity")}>
+              <SelectTrigger id="category"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="spiritual">Spiritual / Mythological</SelectItem>
+                <SelectItem value="celebrity">Film Industry (Actors & Actresses)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="god">Select Deity / Character</Label>
-              <Select value={god} onValueChange={setGod}>
-                <SelectTrigger id="god"><SelectValue /></SelectTrigger>
-                <SelectContent className="max-h-72">
-                  {GODS.map((g) => (
-                    <SelectItem key={g} value={g}>{g}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Label htmlFor="subject">
+                {category === "spiritual" ? "Select Deity / Character" : "Select Actor / Actress"}
+              </Label>
+              {category === "spiritual" ? (
+                <Select value={god} onValueChange={setGod}>
+                  <SelectTrigger id="subject"><SelectValue /></SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {GODS.map((g) => (
+                      <SelectItem key={g} value={g}>{g}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <Select value={celebrity} onValueChange={setCelebrity}>
+                  <SelectTrigger id="subject"><SelectValue /></SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {CELEBRITIES.map((c) => (
+                      <SelectItem key={c} value={c}>{c}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="style">Sketch Style</Label>
