@@ -19,6 +19,7 @@ const GODS = [
   "Jagannath", "Vitthal", "Murugan", "Shani", "Kuber", "Yama", "Varuna",
   "Vayu", "Ganga", "Yamuna", "Tulsi", "Annapurna", "Santoshi Maa",
   "Vaishno Devi", "Meenakshi", "Radha", "Sita", "Lakshman", "Bharat",
+  "Sawariya Seth Ji", "Shrinathji", "Khatu Shyam Ji", "Banke Bihari Ji",
   // Spiritual Saints & Gurus (Hindu)
   "Sai Baba of Shirdi", "Swami Vivekananda", "Ramakrishna Paramahamsa",
   "Adi Shankaracharya", "Tulsidas", "Kabir Das", "Guru Nanak",
