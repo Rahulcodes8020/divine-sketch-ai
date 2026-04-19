@@ -55,6 +55,58 @@ const GODS = [
   "Dhruv", "Prahlad", "Markandeya", "Eklavya", "Abhimanyu",
 ];
 
+const CELEBRITIES = [
+  // Bollywood Legends
+  "Amitabh Bachchan", "Dilip Kumar", "Raj Kapoor", "Dev Anand", "Rajesh Khanna",
+  "Shashi Kapoor", "Sanjeev Kumar", "Rishi Kapoor", "Vinod Khanna", "Jeetendra",
+  "Dharmendra", "Sunil Dutt", "Ashok Kumar", "Guru Dutt", "Shammi Kapoor",
+  // Bollywood Actors (Modern)
+  "Shah Rukh Khan", "Salman Khan", "Aamir Khan", "Akshay Kumar", "Hrithik Roshan",
+  "Ajay Devgn", "Saif Ali Khan", "Anil Kapoor", "Sanjay Dutt", "Govinda",
+  "Ranbir Kapoor", "Ranveer Singh", "Varun Dhawan", "Sidharth Malhotra",
+  "Tiger Shroff", "Vicky Kaushal", "Kartik Aaryan", "Ayushmann Khurrana",
+  "Rajkummar Rao", "Nawazuddin Siddiqui", "Irrfan Khan", "Manoj Bajpayee",
+  "Pankaj Tripathi", "Boman Irani", "Paresh Rawal", "Naseeruddin Shah",
+  "Om Puri", "Anupam Kher", "Shahid Kapoor", "John Abraham", "Abhishek Bachchan",
+  // Bollywood Actresses (Legends)
+  "Madhubala", "Meena Kumari", "Nargis", "Waheeda Rehman", "Hema Malini",
+  "Rekha", "Sridevi", "Madhuri Dixit", "Juhi Chawla", "Kajol", "Karisma Kapoor",
+  // Bollywood Actresses (Modern)
+  "Aishwarya Rai Bachchan", "Priyanka Chopra", "Deepika Padukone", "Katrina Kaif",
+  "Anushka Sharma", "Kareena Kapoor Khan", "Vidya Balan", "Rani Mukerji",
+  "Alia Bhatt", "Shraddha Kapoor", "Kriti Sanon", "Kiara Advani", "Sara Ali Khan",
+  "Janhvi Kapoor", "Disha Patani", "Jacqueline Fernandez", "Parineeti Chopra",
+  "Sonam Kapoor", "Bhumi Pednekar", "Taapsee Pannu", "Tabu", "Konkona Sen Sharma",
+  // South Indian Superstars
+  "Rajinikanth", "Kamal Haasan", "Mohanlal", "Mammootty", "Chiranjeevi",
+  "Nagarjuna", "Venkatesh", "Mahesh Babu", "Pawan Kalyan", "Allu Arjun",
+  "Ram Charan", "Jr NTR", "Prabhas", "Vijay (Thalapathy)", "Ajith Kumar",
+  "Suriya", "Vikram", "Dhanush", "Vijay Sethupathi", "Yash", "Sudeep",
+  "Puneeth Rajkumar", "Dulquer Salmaan", "Fahadh Faasil", "Nani", "Ravi Teja",
+  // South Indian Actresses
+  "Jayalalithaa", "Savitri", "Khushbu", "Trisha Krishnan",
+  "Nayanthara", "Samantha Ruth Prabhu", "Rashmika Mandanna", "Pooja Hegde",
+  "Tamannaah Bhatia", "Kajal Aggarwal", "Anushka Shetty", "Sai Pallavi",
+  "Keerthy Suresh", "Shruti Haasan",
+  // Hollywood Legends
+  "Marilyn Monroe", "Audrey Hepburn", "Charlie Chaplin", "Humphrey Bogart",
+  "Marlon Brando", "James Dean", "Elizabeth Taylor", "Grace Kelly",
+  "Clint Eastwood", "Robert De Niro", "Al Pacino", "Jack Nicholson",
+  "Anthony Hopkins", "Morgan Freeman", "Sean Connery",
+  // Hollywood Actors (Modern)
+  "Tom Cruise", "Tom Hanks", "Brad Pitt", "Leonardo DiCaprio", "Johnny Depp",
+  "Will Smith", "Denzel Washington", "Keanu Reeves", "Hugh Jackman",
+  "Robert Downey Jr.", "Chris Hemsworth", "Chris Evans", "Mark Ruffalo",
+  "Christian Bale", "Matt Damon", "Ben Affleck", "Ryan Reynolds", "Ryan Gosling",
+  "Dwayne Johnson", "Jason Statham", "Vin Diesel", "Daniel Craig",
+  "Joaquin Phoenix", "Cillian Murphy", "Timothée Chalamet", "Tom Holland",
+  // Hollywood Actresses (Modern)
+  "Meryl Streep", "Julia Roberts", "Nicole Kidman", "Angelina Jolie",
+  "Jennifer Lawrence", "Scarlett Johansson", "Anne Hathaway", "Natalie Portman",
+  "Emma Stone", "Emma Watson", "Jennifer Aniston", "Cate Blanchett",
+  "Charlize Theron", "Gal Gadot", "Margot Robbie", "Zendaya", "Florence Pugh",
+];
+
 const STYLES = [
   { value: "pencil", label: "Pencil Sketch" },
   { value: "charcoal", label: "Charcoal Sketch" },
