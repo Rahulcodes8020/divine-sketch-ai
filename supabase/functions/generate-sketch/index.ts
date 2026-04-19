@@ -32,11 +32,31 @@ Deno.serve(async (req) => {
     const styleText = styleMap[style] ?? styleMap.pencil;
 
     const isCelebrity = category === "celebrity";
+
+    // Iconographic descriptions for deities whose form the AI may not know well
+    const deityIconography: Record<string, string> = {
+      "Sawariya Seth Ji": "Sanwariya Seth (Sanwaliya Seth) of Mandphia Rajasthan — child form of Lord Krishna depicted as a small standing deity idol with a dark/black complexion, wearing an ornate royal crown (mukut), elaborate jewelry, peacock feather, holding a flute (bansuri), dressed in heavily decorated traditional Rajasthani temple attire with flower garlands, standing in tribhanga pose on a decorated pedestal, temple sanctum background",
+      "Khatu Shyam Ji": "Khatu Shyam Ji of Rajasthan — depicted as a severed head deity (Sheesh ke Daani Barbarika) with a royal crown, peacock feathers, elaborate jewelry, kind smiling face, devotional temple iconography, garlands of flowers",
+      "Shrinathji": "Shrinathji of Nathdwara — seven-year-old child form of Krishna with left arm raised lifting Govardhan hill, dark complexion, large lotus eyes, wearing ornate shringar, traditional Pushtimarg temple iconography",
+      "Banke Bihari Ji": "Banke Bihari Ji of Vrindavan — tribhanga (three-bend) standing pose Krishna idol with flute, peacock feather crown, lotus eyes, ornate Vrindavan temple shringar, dark complexion",
+      "Balaji": "Lord Venkateswara Balaji of Tirupati — standing four-armed Vishnu form with tall conical crown (kireeta mukut), namam tilak on forehead covering the eyes, conch and discus in upper hands, lower hands in varada and katyavalambita pose, heavily ornamented",
+      "Sai Baba of Shirdi": "Sai Baba of Shirdi — elderly saint seated cross-legged with right leg over left, white head cloth, simple kafni robe, kind weathered face with white beard, peaceful expression, hand raised in blessing",
+      "Shirdi Sai Baba": "Sai Baba of Shirdi — elderly saint seated cross-legged with right leg over left, white head cloth, simple kafni robe, kind weathered face with white beard, peaceful expression, hand raised in blessing",
+      "Ayyappa": "Lord Ayyappa of Sabarimala — seated in yogic padmasana with yoga-patta band around knees, holding bow, Chinmudra hand gesture, jewelry and crown, serene youthful face",
+      "Jagannath": "Lord Jagannath of Puri — distinctive wooden idol form with large round eyes, stub arms, no visible legs, brightly decorated, traditional Puri temple iconography",
+      "Vitthal": "Lord Vitthal/Vithoba of Pandharpur — standing on a brick with arms akimbo (hands on hips), tall crown, simple symmetrical posture",
+      "Murugan": "Lord Murugan/Kartikeya — youthful warrior god holding the Vel spear, peacock vahana, six faces optional, royal crown, ornate jewelry",
+      "Santoshi Maa": "Goddess Santoshi Maa — four-armed seated on lotus, holding sword and trishul, bowl of rice and jaggery, kind motherly face, red sari",
+    };
+
+    const iconography = deityIconography[god];
     const subjectPhrase = isCelebrity
       ? `a recognizable portrait of ${god}, the famous film actor/actress`
-      : `Lord ${god}, divine aura, perfect symmetry`;
+      : iconography
+        ? `${iconography}, divine aura, perfect symmetry`
+        : `Lord ${god}, traditional authentic Hindu iconography, divine aura, perfect symmetry`;
 
-    const prompt = `A masterpiece realistic ${styleText} of ${subjectPhrase}, extremely detailed face, fine line art, graphite drawing style, ultra HD 4K, clean white background, professional hand-drawn portrait sketch, black and white only. Avoid: color, blur, low quality, distorted face, extra limbs, watermark, text, logo.`;
+    const prompt = `A masterpiece highly accurate ${styleText} of ${subjectPhrase}. Extremely detailed face and traditional iconography, fine line art, graphite drawing style, ultra HD 4K, clean white background, professional hand-drawn portrait sketch, black and white only, true to authentic religious depiction. Avoid: color, blur, low quality, distorted face, extra limbs, wrong iconography, watermark, text, logo.`;
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
