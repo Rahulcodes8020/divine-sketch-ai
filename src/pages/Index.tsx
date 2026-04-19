@@ -8,17 +8,40 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 const GODS = [
+  // Core Hindu Deities
   "Krishna", "Shiva", "Ram", "Hanuman", "Ganesha", "Vishnu", "Brahma",
   "Durga", "Lakshmi", "Saraswati", "Parvati", "Kartikeya", "Nandi",
+  // Vishnu Avatars
   "Matsya", "Kurma", "Varaha", "Narasimha", "Vamana", "Parashurama",
-  "Buddha", "Kalki", "Kali", "Balaji", "Ayyappa", "Surya", "Chandra",
-  "Indra", "Agni",
+  "Buddha", "Kalki",
+  // Regional / Powerful Forms
+  "Kali", "Balaji", "Ayyappa", "Surya", "Chandra", "Indra", "Agni",
+  "Jagannath", "Vitthal", "Murugan", "Shani", "Kuber", "Yama", "Varuna",
+  "Vayu", "Ganga", "Yamuna", "Tulsi", "Annapurna", "Santoshi Maa",
+  "Vaishno Devi", "Meenakshi", "Radha", "Sita", "Lakshman", "Bharat",
+  // Spiritual Saints & Gurus
+  "Sai Baba of Shirdi", "Swami Vivekananda", "Ramakrishna Paramahamsa",
+  "Adi Shankaracharya", "Tulsidas", "Kabir Das", "Guru Nanak",
+  "Mahavira", "Chaitanya Mahaprabhu", "Mirabai", "Ramana Maharshi",
+  // Spiritual / Mythological Cartoon Characters
+  "Bal Ganesh", "Bal Krishna", "Little Hanuman", "Little Ram",
+  "Chhota Bheem", "Arjun (Mahabharat)", "Karna", "Bhishma",
+  "Ravana", "Vibhishana", "Jatayu", "Garuda", "Sudama",
 ];
 
 const STYLES = [
   { value: "pencil", label: "Pencil Sketch" },
   { value: "charcoal", label: "Charcoal Sketch" },
   { value: "lineart", label: "Line Art" },
+  { value: "crosshatch", label: "Cross-Hatch Sketch" },
+  { value: "stippling", label: "Stippling (Dot Art)" },
+  { value: "ink", label: "Ink Pen Sketch" },
+  { value: "realistic", label: "Hyper-Realistic Pencil" },
+  { value: "cartoon", label: "Cartoon Sketch" },
+  { value: "anime", label: "Anime Line Sketch" },
+  { value: "watercolor-bw", label: "B&W Watercolor Sketch" },
+  { value: "vintage", label: "Vintage Engraving" },
+  { value: "mandala", label: "Mandala Line Art" },
 ];
 
 const Index = () => {
@@ -66,17 +89,17 @@ const Index = () => {
             AI Powered
           </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3 bg-clip-text text-transparent" style={{ backgroundImage: "var(--gradient-divine)" }}>
-            AI God Pencil Sketch Generator
+            Sketch Generator
           </h1>
           <p className="text-muted-foreground text-base md:text-lg">
-            Generate divine hand-drawn sketches of Hindu deities in seconds.
+            Generate divine hand-drawn sketches of deities, saints & spiritual icons.
           </p>
         </header>
 
         <Card className="p-6 md:p-8 shadow-[var(--shadow-soft)] border-border/60">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="god">Select God</Label>
+              <Label htmlFor="god">Select Deity / Character</Label>
               <Select value={god} onValueChange={setGod}>
                 <SelectTrigger id="god"><SelectValue /></SelectTrigger>
                 <SelectContent className="max-h-72">
