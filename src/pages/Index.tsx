@@ -19,14 +19,40 @@ const GODS = [
   "Jagannath", "Vitthal", "Murugan", "Shani", "Kuber", "Yama", "Varuna",
   "Vayu", "Ganga", "Yamuna", "Tulsi", "Annapurna", "Santoshi Maa",
   "Vaishno Devi", "Meenakshi", "Radha", "Sita", "Lakshman", "Bharat",
-  // Spiritual Saints & Gurus
+  // Spiritual Saints & Gurus (Hindu)
   "Sai Baba of Shirdi", "Swami Vivekananda", "Ramakrishna Paramahamsa",
   "Adi Shankaracharya", "Tulsidas", "Kabir Das", "Guru Nanak",
   "Mahavira", "Chaitanya Mahaprabhu", "Mirabai", "Ramana Maharshi",
+  "Paramahansa Yogananda", "Sri Aurobindo", "The Mother (Mirra Alfassa)",
+  "Swami Sivananda", "Swami Chinmayananda", "Sant Tukaram", "Sant Dnyaneshwar",
+  "Sant Eknath", "Sant Namdev", "Surdas", "Ravidas", "Tyagaraja",
+  "Madhvacharya", "Ramanujacharya", "Vallabhacharya", "Basavanna",
+  "Akka Mahadevi", "Andal", "Lalleshwari", "Sant Gadge Maharaj",
+  "Neem Karoli Baba", "Anandamayi Ma", "Mata Amritanandamayi (Amma)",
+  "Sri Sri Ravi Shankar", "Sadhguru Jaggi Vasudev", "Sathya Sai Baba",
+  "Mahatma Gandhi", "Mother Teresa", "Dalai Lama", "Thich Nhat Hanh",
+  // Sikh Gurus
+  "Guru Angad", "Guru Amar Das", "Guru Ram Das", "Guru Arjan",
+  "Guru Hargobind", "Guru Har Rai", "Guru Har Krishan", "Guru Tegh Bahadur",
+  "Guru Gobind Singh",
+  // Buddhist Figures
+  "Gautama Buddha", "Bodhisattva Avalokiteshvara", "Tara", "Padmasambhava",
+  "Milarepa", "Nagarjuna",
+  // Jain Tirthankaras
+  "Rishabhanatha", "Parshvanatha", "Neminatha",
+  // Abrahamic / World Spiritual Figures
+  "Jesus Christ", "Mother Mary", "Saint Joseph", "Saint Peter",
+  "Saint Francis of Assisi", "Saint Anthony", "Saint Jude",
+  "Prophet Muhammad (PBUH)", "Prophet Moses", "Prophet Abraham",
+  "Prophet Noah", "Prophet Jesus (Isa)", "Rumi", "Khwaja Moinuddin Chishti",
+  "Nizamuddin Auliya", "Shirdi Sai Baba",
+  // Zoroastrian
+  "Zarathustra (Zoroaster)",
   // Spiritual / Mythological Cartoon Characters
   "Bal Ganesh", "Bal Krishna", "Little Hanuman", "Little Ram",
   "Chhota Bheem", "Arjun (Mahabharat)", "Karna", "Bhishma",
   "Ravana", "Vibhishana", "Jatayu", "Garuda", "Sudama",
+  "Dhruv", "Prahlad", "Markandeya", "Eklavya", "Abhimanyu",
 ];
 
 const STYLES = [
