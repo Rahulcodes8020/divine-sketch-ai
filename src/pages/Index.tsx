@@ -253,7 +253,7 @@ const Index = () => {
                 <div className="rounded-xl overflow-hidden border border-border bg-white">
                   <img
                     src={imageUrl}
-                    alt={`${style} sketch of Lord ${god}`}
+                    alt={`${style} sketch of ${subject}`}
                     className="w-full h-auto block"
                   />
                 </div>
