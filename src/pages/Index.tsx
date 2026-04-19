@@ -123,17 +123,21 @@ const STYLES = [
 ];
 
 const Index = () => {
+  const [category, setCategory] = useState<"spiritual" | "celebrity">("spiritual");
   const [god, setGod] = useState("Krishna");
+  const [celebrity, setCelebrity] = useState("Amitabh Bachchan");
   const [style, setStyle] = useState("pencil");
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  const subject = category === "spiritual" ? god : celebrity;
 
   const handleGenerate = async () => {
     setLoading(true);
     setImageUrl(null);
     try {
       const { data, error } = await supabase.functions.invoke("generate-sketch", {
-        body: { god, style },
+        body: { god: subject, style, category },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
