@@ -7,9 +7,9 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { god, style } = await req.json();
+    const { god, style, category } = await req.json();
     if (!god || !style) {
-      return new Response(JSON.stringify({ error: "Missing god or style" }), {
+      return new Response(JSON.stringify({ error: "Missing subject or style" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -31,7 +31,12 @@ Deno.serve(async (req) => {
     };
     const styleText = styleMap[style] ?? styleMap.pencil;
 
-    const prompt = `A masterpiece realistic ${styleText} of Lord ${god}, extremely detailed face, divine aura, perfect symmetry, fine line art, graphite drawing style, ultra HD 4K, clean white background, professional hand-drawn sketch, black and white only. Avoid: color, blur, low quality, distorted face, extra limbs, watermark, text, logo.`;
+    const isCelebrity = category === "celebrity";
+    const subjectPhrase = isCelebrity
+      ? `a recognizable portrait of ${god}, the famous film actor/actress`
+      : `Lord ${god}, divine aura, perfect symmetry`;
+
+    const prompt = `A masterpiece realistic ${styleText} of ${subjectPhrase}, extremely detailed face, fine line art, graphite drawing style, ultra HD 4K, clean white background, professional hand-drawn portrait sketch, black and white only. Avoid: color, blur, low quality, distorted face, extra limbs, watermark, text, logo.`;
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
