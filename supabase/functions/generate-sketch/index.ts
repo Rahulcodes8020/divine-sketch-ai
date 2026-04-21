@@ -58,32 +58,32 @@ Deno.serve(async (req) => {
 
     const prompt = `A masterpiece highly accurate ${styleText} of ${subjectPhrase}. Extremely detailed face and traditional iconography, fine line art, graphite drawing style, ultra HD 4K, clean white background, professional hand-drawn portrait sketch, black and white only, true to authentic religious depiction. Avoid: color, blur, low quality, distorted face, extra limbs, wrong iconography, watermark, text, logo.`;
 
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
+    const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
+    if (!GEMINI_API_KEY) throw new Error("GEMINI_API_KEY not configured");
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-flash-image",
-        messages: [{ role: "user", content: prompt }],
-        modalities: ["image", "text"],
-      }),
-    });
+    // Call Google Gemini directly (free tier — no Lovable credits used)
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ role: "user", parts: [{ text: prompt }] }],
+          generationConfig: { responseModalities: ["IMAGE", "TEXT"] },
+        }),
+      }
+    );
 
     if (!response.ok) {
       const t = await response.text();
-      console.error("AI gateway error:", response.status, t);
+      console.error("Gemini API error:", response.status, t);
       if (response.status === 429) {
-        return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again shortly." }), {
-          status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        return new Response(JSON.stringify({ error: "Free tier rate limit reached. Please wait a minute and try again.", code: "RATE_LIMIT" }), {
+          status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      if (response.status === 402) {
-        return new Response(JSON.stringify({ error: "AI credits exhausted. Please add credits in Settings.", code: "AI_CREDITS_EXHAUSTED" }), {
+      if (response.status === 401 || response.status === 403) {
+        return new Response(JSON.stringify({ error: "Invalid Gemini API key. Please update GEMINI_API_KEY.", code: "INVALID_KEY" }), {
           status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
@@ -93,8 +93,14 @@ Deno.serve(async (req) => {
     }
 
     const data = await response.json();
-    const imageUrl = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
-    if (!imageUrl) throw new Error("No image returned");
+    const parts = data?.candidates?.[0]?.content?.parts ?? [];
+    const imgPart = parts.find((p: any) => p?.inlineData?.data);
+    if (!imgPart) {
+      console.error("No image in Gemini response:", JSON.stringify(data).slice(0, 500));
+      throw new Error("No image returned");
+    }
+    const mime = imgPart.inlineData.mimeType || "image/png";
+    const imageUrl = `data:${mime};base64,${imgPart.inlineData.data}`;
 
     return new Response(JSON.stringify({ imageUrl }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
