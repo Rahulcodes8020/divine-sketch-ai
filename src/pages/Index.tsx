@@ -123,6 +123,15 @@ const STYLES = [
   { value: "mandala", label: "Mandala Line Art" },
 ];
 
+const getSketchErrorMessage = (error: unknown, data?: { error?: string; code?: string } | null) => {
+  const rawMessage = data?.error || (error instanceof Error ? error.message : "Failed to generate sketch");
+  const isCreditsError = data?.code === "AI_CREDITS_EXHAUSTED" || /402|credits exhausted|not enough credits|payment required/i.test(rawMessage);
+
+  return isCreditsError
+    ? "AI credits are exhausted. Please add credits in Settings, then try again."
+    : rawMessage;
+};
+
 const Index = () => {
   const [category, setCategory] = useState<"spiritual" | "celebrity">("spiritual");
   const [god, setGod] = useState("Krishna");
@@ -130,23 +139,25 @@ const Index = () => {
   const [style, setStyle] = useState("pencil");
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const subject = category === "spiritual" ? god : celebrity;
 
   const handleGenerate = async () => {
     setLoading(true);
     setImageUrl(null);
+    setErrorMessage(null);
     try {
       const { data, error } = await supabase.functions.invoke("generate-sketch", {
         body: { god: subject, style, category },
       });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
+      if (error || data?.error) throw new Error(getSketchErrorMessage(error, data));
       if (!data?.imageUrl) throw new Error("No image returned");
       setImageUrl(data.imageUrl);
       toast.success("Sketch generated!");
     } catch (e) {
-      const msg = e instanceof Error ? e.message : "Failed to generate sketch";
+      const msg = getSketchErrorMessage(e);
+      setErrorMessage(msg);
       toast.error(msg);
     } finally {
       setLoading(false);
@@ -265,7 +276,7 @@ const Index = () => {
             )}
             {!loading && !imageUrl && (
               <div className="aspect-square w-full rounded-xl border-2 border-dashed border-border flex items-center justify-center text-muted-foreground text-sm text-center px-6">
-                Your generated sketch will appear here.
+                {errorMessage ?? "Your generated sketch will appear here."}
               </div>
             )}
           </div>
